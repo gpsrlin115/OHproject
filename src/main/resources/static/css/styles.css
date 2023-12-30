@@ -36,11 +36,31 @@
 }
 
 .product-body {
-    text-align: center; /* centers the text */
+    padding: 10px; /* 이미지와 동일한 패딩 적용 */
+    text-align: left; /* 텍스트를 왼쪽으로 정렬 */
 }
 
-.product-title, .product-weight, .product-pricing, .add-to-cart-btn {
-    margin-bottom: 10px; /* space between elements */
+.product-pricing {
+    display: flex;
+    align-items: baseline; /* 가격과 할인율을 같은 기준선에 맞춥니다 */
+    margin-bottom: 10px; /* 다음 요소와의 간격을 위해 설정 */
+}
+
+.product-price {
+    font-size: 24px; /* 크기를 키웁니다 */
+    font-weight: bold; /* 굵게 만듭니다 */
+    color: #333; /* 색상을 진하게 합니다 */
+    margin-right: 5px; /* 할인율과의 간격을 위해 설정 */
+}
+
+.product-discount {
+    font-size: 14px; /* 작게 만듭니다 */
+    color: #FFA500; /* 주황색으로 합니다 */
+}
+
+.discount-percentage {
+    font-size: 14px; /* 작게 만듭니다 */
+    color: #FFA500; /* 주황색으로 합니다 */
 }
 
 .add-to-cart-btn {
@@ -52,23 +72,7 @@
     text-transform: uppercase; /* stylistic choice */
 }
 
-.product-price {
-    text-align: left;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-}
 
-.product-discount {
-    font-size: 14px;
-    color: #FFA500;
-    margin-left: 5px;
-}
-
-.discount-percentage {
-    font-size: 14px;
-    color: #FFA500;
-}
 
 /* 할인율이 있는 경우, 가격과 함께 왼쪽 정렬을 유지하기 위한 컨테이너 */
 .price-container {
