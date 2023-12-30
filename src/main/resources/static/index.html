@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -138,25 +138,27 @@
 
 <script>
     function addToCart(productId) {
-        fetch('/cart/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'productId=' + productId + '&quantity=1'
-        })
-            .then(response => {
-                if(response.ok) {
-                    return response.json();
-                }
-                throw new Error('Request failed.');
-            })
-            .then(data => {
-                console.log(data);
+        // 상품 ID, 수량 정보를 포함하는 FormData 객체 생성
+        let formData = new FormData();
+        formData.append("productId", productId);
+        formData.append("quantity", 1);
 
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        fetch('/add',
+            {
+                method: 'POST',
+                body: formData
+            }
+        ).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok' + response.statusText);
+            }
+            return response.json();
+        }).catch(error => {
+            alert(error.message);
+        }).then(data => {
+            console.log(data);
+        }).then(error => {
+            console.error('fetch failed');
+        });
     }
 </script>

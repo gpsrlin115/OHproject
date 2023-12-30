@@ -7,7 +7,9 @@ import com.example.ourhome.webProject.repository.ProductRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @Service
 public class ShoppingCartService {
     @Autowired
@@ -35,11 +37,6 @@ public class ShoppingCartService {
         }
     }
 
-    public void addToCart(Long productId, int quantity) {
-        CartItem cartItem = new CartItem();
-        // Set product reference and quantity
-        cartItemRepository.save(cartItem);
-    }
 }
 
 
