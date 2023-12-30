@@ -22,7 +22,7 @@
                     <span class="product-price">1,590원</span>
                     <span class="product-discount">9</span><span class="discount-percentage">%</span>
                 </div>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addToCart(1)">Add to Cart</button>
             </div>
         </div>
         <!-- End of product block -->
@@ -38,7 +38,7 @@
                     <span class="product-price">3,900원</span>
                     <span class="product-discount">30</span><span class="discount-percentage">%</span>
                 </div>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addToCart(2)">Add to Cart</button>
             </div>
         </div>
         <div class="product">
@@ -53,7 +53,7 @@
                     <span class="product-price">3,000원</span>
                     <span class="product-discount">5</span><span class="discount-percentage">%</span>
                 </div>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addToCart(3)">Add to Cart</button>
             </div>
         </div>
         <div class="product">
@@ -68,7 +68,7 @@
                     <span class="product-price">5,940원</span>
                     <span class="product-discount">10</span><span class="discount-percentage">%</span>
                 </div>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addToCart(4)">Add to Cart</button>
             </div>
         </div>
         <div class="product">
@@ -83,7 +83,7 @@
                     <span class="product-price">17,000원</span>
                     <span class="product-discount">5</span><span class="discount-percentage">%</span>
                 </div>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addToCart(5)">Add to Cart</button>
             </div>
         </div>
         <div class="product">
@@ -98,7 +98,7 @@
                     <span class="product-price">2,280원</span>
                     <span class="product-discount">5</span><span class="discount-percentage">%</span>
                 </div>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addToCart(6)">Add to Cart</button>
             </div>
         </div>
         <div class="product">
@@ -112,7 +112,7 @@
                 <div class="product-pricing">
                     <span class="product-price">3,670원</span>
                 </div>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addToCart(7)">Add to Cart</button>
             </div>
         </div>
         <div class="product">
@@ -127,10 +127,36 @@
                     <span class="product-price">2,790원</span>
                     <span class="product-discount">6</span><span class="discount-percentage">%</span>
                 </div>
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addToCart(8)">Add to Cart</button>
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
+
+
+<script>
+    function addToCart(productId) {
+        fetch('/cart/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'productId=' + productId + '&quantity=1'
+        })
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                }
+                throw new Error('Request failed.');
+            })
+            .then(data => {
+                console.log(data);
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+</script>
