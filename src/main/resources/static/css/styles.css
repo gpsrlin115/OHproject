@@ -1,34 +1,72 @@
-.main {
-    border: 1px solid red;
+.container {
+    max-width: 1200px; /* or your preferred max width */
+    margin: 0 auto; /* this centers your container in the middle of the page */
+    padding: 0 15px; /* optional padding */
 }
 
-.grid {
-    border: 1px solid green;
-    width: 100%;
+.product-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 28px;
-    @media screen and (max-width: 718px) {
-        gap: 3px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px; /* adjust the gap as needed */
+}
+
+.product {
+    border: 1px solid #ccc; /* example border */
+    padding: 10px; /* example padding */
+}
+
+.product-header {
+    position: relative; /* for positioning the product number */
+    margin-bottom: 10px; /* space between image and product header */
+}
+
+.product-number {
+    position: absolute;
+    top: -10px; /* adjust as needed */
+    left: -10px; /* adjust as needed */
+    background-color: #f1f1f1; /* example background color */
+    padding: 5px;
+    border-radius: 50%; /* circular shape */
+    font-weight: bold;
+}
+
+.product-image {
+    width: 100%; /* makes the image responsive */
+    height: auto; /* maintain aspect ratio */
+}
+
+.product-body {
+    text-align: center; /* centers the text */
+}
+
+.product-title, .product-weight, .product-pricing, .add-to-cart-btn {
+    margin-bottom: 10px; /* space between elements */
+}
+
+.add-to-cart-btn {
+    background-color: #007bff; /* example button color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-transform: uppercase; /* stylistic choice */
+}
+
+/* Responsive behavior */
+@media (max-width: 1200px) { /* adjust this breakpoint as needed */
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr); /* four items per row */
     }
 }
 
-.CardContainer {
-    border: 1px solid black;
-    width: 100%;
-    position: relative;
-    background-color: green;
+@media (max-width: 992px) { /* adjust this breakpoint as needed */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* two items per row */
+    }
 }
 
-.CardContainer::after {
-    display: block;
-    content: "";
-    padding-bottom: 100%;
-}
-
-.CardBox {
-    border: 1px solid blue;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+@media (max-width: 768px) { /* adjust this breakpoint as needed */
+    .product-grid {
+        grid-template-columns: 1fr; /* one item per row */
+    }
 }

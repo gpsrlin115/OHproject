@@ -4,24 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List Page</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<section class="Main">
-    <div class="Grid">
-        <div class="CardContainer">
-            <div class="CardBox"></div>
+<div class="container">
+    <div class="product-grid">
+        <!-- Repeat this block for each product -->
+        <div class="product">
+            <div class="product-header">
+                <span class="product-number">01</span>
+                <img src="path_to_product_image.jpg" alt="Product Name" class="product-image">
+            </div>
+            <div class="product-body">
+                <h3 class="product-title">Product Title</h3>
+                <p class="product-weight">Product Weight</p>
+                <div class="product-pricing">
+                    <span class="product-price">Product Price</span>
+                    <span class="product-discount">Product Discount</span>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
         </div>
-        <div class="CardContainer">
-            <div class="CardBox"></div>
+        <!-- End of product block -->
+        <div class="product">
+            <div class="product-header">
+                <span class="product-number">02</span>
+                <img src="path_to_product_image.jpg" alt="Product Name" class="product-image">
+            </div>
+            <div class="product-body">
+                <h3 class="product-title">Product Title2</h3>
+                <p class="product-weight">Product Weight2</p>
+                <div class="product-pricing">
+                    <span class="product-price">Product Price2</span>
+                    <span class="product-discount">Product Discount2</span>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
         </div>
-        <div class="CardContainer">
-            <div class="CardBox"></div>
-        </div>
-        <div class="CardContainer">
-            <div class="CardBox"></div>
+        <div class="product">
+            <div class="product-header">
+                <span class="product-number">03</span>
+                <img src="path_to_product_image.jpg" alt="Product Name" class="product-image">
+            </div>
+            <div class="product-body">
+                <h3 class="product-title">Product Title3</h3>
+                <p class="product-weight">Product Weight3</p>
+                <div class="product-pricing">
+                    <span class="product-price">Product Price3</span>
+                    <span class="product-discount">Product Discount3</span>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
         </div>
     </div>
-</section>
+</div>
 </body>
 </html>
