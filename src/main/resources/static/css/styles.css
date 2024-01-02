@@ -1,100 +1,113 @@
 .container {
-    max-width: 1200px; /* or your preferred max width */
-    margin: 0 auto; /* this centers your container in the middle of the page */
-    padding: 0 15px; /* optional padding */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 10px; /* adjust the gap as needed */
+    gap: 10px;
 }
 
 .product {
-    border: 1px solid #ccc; /* example border */
-    padding: 10px; /* example padding */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .product-header {
-    position: relative; /* for positioning the product number */
-    margin-bottom: 10px; /* space between image and product header */
+    position: relative;
 }
 
 .product-number {
     position: absolute;
-    top: -10px; /* adjust as needed */
-    left: -10px; /* adjust as needed */
-    background-color: #f1f1f1; /* example background color */
-    padding: 5px;
-    border-radius: 50%; /* circular shape */
+    top: 16px;
+    left: 16px;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 50%;
+    text-align: center;
+    width: 30px;
+    height: 30px;
     font-weight: bold;
 }
 
 .product-image {
-    width: 100%; /* makes the image responsive */
-    height: auto; /* maintain aspect ratio */
+    width: 100%;
+    display: block;
 }
 
 .product-body {
-    padding: 10px; /* 이미지와 동일한 패딩 적용 */
-    text-align: left; /* 텍스트를 왼쪽으로 정렬 */
+    padding: 16px;
+    background-color: #f9f9f9;
+}
+
+.product-title {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+}
+
+.product-description {
+    font-size: 0.9em;
+    margin-bottom: 16px;
 }
 
 .product-pricing {
     display: flex;
-    align-items: baseline; /* 가격과 할인율을 같은 기준선에 맞춥니다 */
-    margin-bottom: 10px; /* 다음 요소와의 간격을 위해 설정 */
+    align-items: baseline;
+    margin-bottom: 16px;
 }
 
 .product-price {
-    font-size: 24px; /* 크기를 키웁니다 */
-    font-weight: bold; /* 굵게 만듭니다 */
-    color: #333; /* 색상을 진하게 합니다 */
-    margin-right: 5px; /* 할인율과의 간격을 위해 설정 */
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    margin-right: 8px;
 }
 
 .product-discount {
-    font-size: 14px; /* 작게 만듭니다 */
-    color: #FFA500; /* 주황색으로 합니다 */
+    font-size: 1em;
+    color: #FFA500;
 }
 
 .discount-percentage {
-    font-size: 14px; /* 작게 만듭니다 */
-    color: #FFA500; /* 주황색으로 합니다 */
+    font-size: 1em;
+    color: #FFA500;
 }
 
 .add-to-cart-btn {
-    background-color: #007bff; /* example button color */
+    background-color: #007bff;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    text-transform: uppercase; /* stylistic choice */
+    text-transform: uppercase;
+    width: 100%;
 }
 
 
-
-/* 할인율이 있는 경우, 가격과 함께 왼쪽 정렬을 유지하기 위한 컨테이너 */
-.price-container {
-    display: flex;
-    align-items: baseline; /* 가격과 할인율을 같은 기준선에 맞춥니다 */
-}
-
-/* Responsive behavior */
-@media (max-width: 1200px) { /* adjust this breakpoint as needed */
+@media (min-width: 1200px) {
     .product-grid {
-        grid-template-columns: repeat(4, 1fr); /* four items per row */
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
-@media (max-width: 992px) { /* adjust this breakpoint as needed */
+
+@media (min-width: 992px) and (max-width: 1199px) {
     .product-grid {
-        grid-template-columns: repeat(2, 1fr); /* two items per row */
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (max-width: 768px) { /* adjust this breakpoint as needed */
+@media (min-width: 768px) and (max-width: 991px) {
     .product-grid {
-        grid-template-columns: 1fr; /* one item per row */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .product-grid {
+        grid-template-columns: 1fr;
     }
 }

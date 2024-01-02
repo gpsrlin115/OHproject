@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List Page</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="product-grid">
+        <!-- Each product is iterated within the product-grid div -->
+        <div class="product" th:each="product, iterStat : ${products}">
+            <div class="product-header">
+                <span class="product-number" th:text="${iterStat.count}">01</span>
+                <img th:src="@{${product.imagePath}}" alt="Product Image" class="product-image">
+            </div>
+            <div class="product-body">
+                <h3 class="product-title" th:text="${product.name}">Product Name</h3>
+                <p class="product-description" th:text="${product.description}">Product Description</p>
+                <div class="product-pricing">
+                    <span class="product-price" th:text="${product.price} + '원'">Price</span>
+                    <span class="product-discount" th:text="${product.discount}">Discount</span>
+                    <span class="discount-percentage" th:if="${product.discount > 0}">%</span>
+                </div>
+                <button class="add-to-cart-btn" th:onclick="'addToCart(' + ${product.id} + ');'">Add to Cart</button>
+            </div>
+        </div>
+        <!-- End of product block -->
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+    function addToCart(productId) {
+        let formData = new FormData();
+        formData.append("productName", productId);
+
+        fetch('/cart/add', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                alert("상품이 장바구니에 정상적으로 등록되었습니다!");
+            })
+            .catch(error => {
+                console.error('Error adding product to cart:', error);
+                alert("Error adding product to cart: " + error.message);
+            });
+    }
+
+
+</script>
