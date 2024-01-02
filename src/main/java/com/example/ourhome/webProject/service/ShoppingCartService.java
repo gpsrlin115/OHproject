@@ -1,10 +1,8 @@
 package com.example.ourhome.webProject.service;
 
 import com.example.ourhome.webProject.model.CartItem;
-import com.example.ourhome.webProject.model.Product;
 import com.example.ourhome.webProject.repository.CartItemRepository;
 import com.example.ourhome.webProject.repository.ProductRepository;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
