@@ -16,11 +16,9 @@ import lombok.Setter;
 @Entity
 public class CartItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
     private int quantity;
-    // getters and setters
 }
