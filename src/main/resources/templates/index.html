@@ -36,7 +36,8 @@
 <script>
     function addToCart(productId) {
         let formData = new FormData();
-        formData.append("productName", productId);
+        formData.append("productId", productId);
+        formData.append("quantity", 1);
 
         fetch('/cart/add', {
             method: 'POST',

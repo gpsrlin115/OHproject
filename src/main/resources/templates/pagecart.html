@@ -5,22 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link rel="stylesheet" th:href="@{/css/cart_styles.css}">
-    <script src="js/cart.js" defer></script>
 </head>
 <body>
 <div class="cart-container">
     <h1>장바구니</h1>
-    <div class="cart-items" th:each="cartItem : ${cartItems}">
-        <div class="cart-item" th:object="${cartItem}" data-id=${cartItem.product.id} data-price=${cartItem.product.price}>
+    <div class="cart-items">
+        <div th:each="cartItem : ${cartItems}" class="cart-item" th:object="${cartItem}" th:attr="data-id=${cartItem.id}, data-price=${cartItem.product.price}">
             <img th:src="@{${cartItem.product.imagePath}}" alt="Product Image" class="product-image">
             <span class="item-name" th:text="*{product.name}">상품명</span>
             <span th:text="${#numbers.formatInteger(cartItem.product.price, 3, 'COMMA')} + '원'">가격</span>
             <div class="item-quantity">
-                <button type="button" th:attr="data-id=${cartItem.product.id}" class="decrease-button">-</button>
+                <button type="button" th:attr="data-id=${cartItem.id}" class="decrease-button">-</button>
                 <span class="quantity" th:text="*{quantity}">1</span>
-                <button type="button" th:attr="data-id=${cartItem.product.id}" class="increase-button">+</button>
+                <button type="button" th:attr="data-id=${cartItem.id}" class="increase-button">+</button>
             </div>
-            <button type="button" class="remove-item-btn" onclick="removeItem(${cartItem.product.id})">제거</button>
+            <button type="button" class="remove-item-btn" onclick="removeItem(${cartItem.id})">제거</button>
         </div>
     </div>
     <div class="cart-summary">
@@ -32,76 +31,57 @@
 </html>
 
 <script th:inline="javascript">
+    // 페이지 로드 완료 후 함수를 실행합니다.
     document.addEventListener('DOMContentLoaded', () => {
-        updateTotal(); // Initial total update
-        attachEventListeners(); // Attach the event listeners to buttons
+        attachEventListeners(); // 이벤트 리스너 설정
+        updateTotal(); // 초기 총액 업데이트
     });
 
+    // 모든 증가 및 감소 버튼에 이벤트 리스너를 붙입니다.
     function attachEventListeners() {
-        // Attach event listeners to all plus and minus buttons
         document.querySelectorAll('.increase-button').forEach(button => {
             button.addEventListener('click', () => {
-                console.log('Increase button clicked for item ID:', button.dataset.id);
-                updateQuantity(button.dataset.id, 1);
+                const itemId = button.getAttribute('data-id');
+                updateQuantity(itemId, 1); // 수량 증가
             });
         });
 
         document.querySelectorAll('.decrease-button').forEach(button => {
             button.addEventListener('click', () => {
-                console.log('Decrease button clicked for item ID:', button.dataset.id);
-                updateQuantity(button.dataset.id, -1);
+                const itemId = button.getAttribute('data-id');
+                updateQuantity(itemId, -1); // 수량 감소
             });
         });
     }
 
+    // 수량을 업데이트하고 총액을 다시 계산합니다.
     function updateQuantity(itemId, change) {
-        // Update the quantity of the item
-        const item = document.querySelector(`.cart-item[data-id=${itemId}]`);
-        if (!item) {
-            console.error('Item with ID not found:', itemId);
-            return;
-        }
+        const item = document.querySelector(`.cart-item[data-id="${itemId}"]`);
         const quantityElement = item.querySelector('.quantity');
-        let quantity = parseInt(quantityElement.textContent, 10);
-        quantity = Math.max(quantity + change, 0); // Prevent negative quantities
+        let quantity = parseInt(quantityElement.textContent) + change;
+
+        // 수량이 음수가 되지 않도록 합니다.
+        quantity = quantity < 0 ? 0 : quantity;
         quantityElement.textContent = quantity;
 
-        // Prepare the data to send in the POST request
-        let formData = new FormData();
-        formData.append("id", itemId);
-        formData.append("change", change);
-
-        // Make the POST request to the server
-        fetch('/cart/update', {
-            method: 'POST',
-            body: formData
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        }).then(data => {
-            // Handle the response from the server
-            console.log('Quantity updated', data);
-            updateTotal(); // Update the total price display
-        }).catch(error => {
-            console.error('Error updating quantity:', error);
-        });
-
-        updateTotal(); // Update the total price display
+        // 총액을 업데이트합니다.
+        updateTotal();
     }
 
+    // 페이지 내 모든 아이템의 가격과 수량을 기반으로 총액을 계산합니다.
     function updateTotal() {
-        //Calculate the total price
         let total = 0;
         document.querySelectorAll('.cart-item').forEach(item => {
-            const price = parseInt(item.dataset.price, 10); // Assuming price is stored in data-price
-            const quantity = parseInt(item.querySelector('.quantity').textContent, 10);
+            const price = parseInt(item.dataset.price, 10); // 가격을 정수로 파싱합니다.
+            const quantityElement = item.querySelector('.quantity');
+            const quantity = parseInt(item.querySelector('.quantity').textContent);
             total += price * quantity;
         });
 
-        // Update the total price display
-        document.querySelector('.summary-total-amount').textContent = `${total.toLocaleString()}원`;
+        // 총액을 표시합니다.
+        const totalAmountElement = document.querySelector('.summary-total-amount');
+        if (totalAmountElement) {
+            totalAmountElement.textContent = `${total.toLocaleString()}원`;
+        }
     }
-
 </script>
