@@ -12,18 +12,18 @@ public class ProductController {
 
     private final ProductService productService;
 
-    // Constructor with dependency injection of the ProductService
+    // ProductService 의존성 주입
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping("/")
     public String index(Model model) {
-        // Fetch the products from the database through the service
+        // 서비스를 통해 데이터베이스에서 제품 가져오기
         List<Product> products = productService.getAllProducts();
-        // Add products to the model
+        // 모델에 제품 주입
         model.addAttribute("products", products);
-        // Return the Thymeleaf template name
+        // Thymeleaf 템플릿 이름 리턴
         return "index";
     }
 }

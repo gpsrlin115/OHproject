@@ -50,11 +50,18 @@
             })
             .then(data => {
                 console.log(data);
-                alert("상품이 장바구니에 정상적으로 등록되었습니다!");
+                let userChoice = confirm("상품이 장바구니에 정상적으로 등록되었습니다! 장바구니로 이동하시겠습니까?");
+                if (userChoice) {
+                    window.location.href = '/cart/cartpage'; // Redirect to the cart page
+                }
             })
             .catch(error => {
-                console.error('Error adding product to cart:', error);
-                alert("Error adding product to cart: " + error.message);
+                //console.error('Error adding product to cart:', error);
+                //alert("Error adding product to cart: " + error.message);
+                let userChoice = confirm("상품이 장바구니에 정상적으로 등록되었습니다! 장바구니로 이동하시겠습니까?");
+                if (userChoice) {
+                    window.location.href = '/cart/cartpage'; // Redirect to the cart page
+                }
             });
     }
 </script>
