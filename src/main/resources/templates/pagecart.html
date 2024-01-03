@@ -19,7 +19,6 @@
                 <span class="quantity" th:text="*{quantity}">1</span>
                 <button type="button" th:attr="data-id=${cartItem.id}" class="increase-button">+</button>
             </div>
-            <button type="button" class="remove-item-btn" onclick="removeItem(${cartItem.id})">제거</button>
         </div>
     </div>
     <div class="cart-summary">
