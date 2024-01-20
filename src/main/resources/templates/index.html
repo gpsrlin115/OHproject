@@ -23,7 +23,7 @@
                     <span class="product-discount" th:text="${product.discount}">Discount</span>
                     <span class="discount-percentage" th:if="${product.discount > 0}">%</span>
                 </div>
-                <button class="add-to-cart-btn" th:onclick="'addToCart(' + ${product.id} + ');'">Add to Cart</button>
+                <button class="add-to-cart-btn" th:onclick="'addToCart(' + ${product.id} + ');'">장바구니에 추가</button>
             </div>
         </div>
         <!-- End of product block -->
@@ -45,23 +45,17 @@
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                let userChoice = confirm("상품이 장바구니에 정상적으로 등록되었습니다! 장바구니로 이동하시겠습니까?");
-                if (userChoice) {
-                    window.location.href = '/cart/cartpage'; // Redirect to the cart page
+                } else {
+                    let userChoice = confirm("상품이 장바구니에 정상적으로 등록되었습니다! 장바구니로 이동하시겠습니까?");
+                    if (userChoice) {
+                        window.location.href = '/cart/cartpage'; // Redirect to the cart page
+                    }
                 }
             })
             .catch(error => {
-                //console.error('Error adding product to cart:', error);
-                //alert("Error adding product to cart: " + error.message);
-                let userChoice = confirm("상품이 장바구니에 정상적으로 등록되었습니다! 장바구니로 이동하시겠습니까?");
-                if (userChoice) {
-                    window.location.href = '/cart/cartpage'; // Redirect to the cart page
-                }
+                console.error('Error adding product to cart:', error);
+                alert("Error adding product to cart: " + error.message);
+
             });
     }
 </script>

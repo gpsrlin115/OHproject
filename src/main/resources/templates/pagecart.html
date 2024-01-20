@@ -72,7 +72,6 @@
         let total = 0;
         document.querySelectorAll('.cart-item').forEach(item => {
             const price = parseInt(item.dataset.price, 10); // 가격을 정수로 파싱합니다.
-            const quantityElement = item.querySelector('.quantity');
             const quantity = parseInt(item.querySelector('.quantity').textContent);
             total += price * quantity;
         });
