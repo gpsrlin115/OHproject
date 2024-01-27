@@ -23,6 +23,10 @@ public class CartItem {
     private int quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usernum_id")
+    private SiteUser siteUser;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 }
