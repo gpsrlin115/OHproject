@@ -1,40 +1,36 @@
 package com.example.ourhome.webProject.controller;
 
-import com.example.ourhome.webProject.model.SiteUser;
+
 import com.example.ourhome.webProject.service.SiteUserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/users")
 public class SiteUserController {
 
     private final SiteUserService siteUserService;
 
-    @GetMapping("/register")
-    public String createForm(Model model) {
-        model.addAttribute("siteUserForm", new SiteUserForm());
+    //비어있는 폼 전달
+    @GetMapping("/login")
+    public String createForm(Model model, SiteUserForm form){
+        model.addAttribute("siteUserForm", form);
         return "login";
     }
 
-    @PostMapping("/register")
-    public String createUser(@Valid SiteUserForm form, BindingResult result){
-        if (result.hasErrors()){
-            return "/register";
-        }
-        SiteUser siteUser = new SiteUser();
-        siteUser.setUsername(form.getName());
-        siteUser.setUserid(form.getUserid());
-        siteUser.setEmail(form.getEmail());
-        siteUser.setPassword(form.getPassword());
-        siteUserService.join(siteUser); //저장
-
-        return "redirect:/";
+    //회원가입
+    @PostMapping("/login")
+    public ResponseEntity<String> join(@RequestBody SiteUserForm form) {
+        siteUserService.join(form.getUserid(), form.getPassword(), form.getUsername(), form.getEmail());
+        return ResponseEntity.ok().body("회원가입 성공");
     }
 
+    //로그인
 }

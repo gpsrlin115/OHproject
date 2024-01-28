@@ -1,15 +1,20 @@
 package com.example.ourhome.webProject.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Getter
-@Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class SiteUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
