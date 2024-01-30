@@ -19,12 +19,6 @@ public class SiteUserController {
 
     private final SiteUserService siteUserService;
 
-    //비어있는 폼 전달
-    @GetMapping("/login")
-    public String createForm(Model model, SiteUserForm form){
-        model.addAttribute("siteUserForm", form);
-        return "login";
-    }
 
     //회원가입
     @PostMapping("/register")
@@ -38,6 +32,12 @@ public class SiteUserController {
     public ResponseEntity<String> login(@RequestBody UserLoginRequest dto) {
         String token = siteUserService.login(dto.getUserid(), dto.getPassword());
         return ResponseEntity.ok().body(token);
+    }
+
+    //test
+    @PostMapping("/hellotest")
+    public String hello(){
+        return "Hello World!";
     }
 
 }

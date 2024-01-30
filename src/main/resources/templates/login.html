@@ -16,11 +16,11 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>-->
             </div>
             <span>or use your email for registration</span>
-            <input type="text" placeholder="Name"/>
-            <input type="text" placeholder="ID" />
-            <input type="email"  placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <button>Sign Up</button>
+            <input type="text" id="username" placeholder="Name"/>
+            <input type="text" id="userid" placeholder="ID" />
+            <input type="email" id="email" placeholder="Email" />
+            <input type="password" id="password" placeholder="Password" />
+            <button id="signUpButton">Sign Up</button>
         </form>
     </div>
     <div class="form-container sign-in-container">
@@ -32,7 +32,7 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
             <span>or use your account!</span>
-            <input type="email" placeholder="Email" />
+            <input type="text" placeholder="id" />
             <input type="password" placeholder="Password" />
             <a href="#">Forgot your password?</a>
             <button>Sign In</button>
@@ -72,4 +72,33 @@
     signInButton.addEventListener('click', () => {
         container.classList.remove("right-panel-active");
     });
+
+    const signUpButton = document.getElementById('signUpButton');
+
+    function login(signInButton){
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        var loginData = {
+            username: username,
+            password: password
+        };
+
+        fetch('/api/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                //서버로부터 온 응답 처리
+                console.log(data);
+            })
+            .catch(error => {
+                //오류 처리
+                console.error('Error', error);
+            })
+    }
 </script>
