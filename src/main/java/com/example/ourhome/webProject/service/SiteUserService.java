@@ -46,4 +46,19 @@ public class SiteUserService {
         return siteUserRepository.findAll();
     }
 
+    public String login(String userName, String password){
+        // userName 없음
+
+        SiteUser selectedSiteUser = siteUserRepository.findByUsername(userName)
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, userName + "는 존재하지 않는 회원입니다."));
+        //password 틀림
+        if (!encoder.matches(password, selectedSiteUser.getPassword())) {
+            throw new AppException(ErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
+        }
+        // 앞에서 Exception 안나면 토큰 발행
+
+
+        return "Token 리턴";
+    }
+
 }

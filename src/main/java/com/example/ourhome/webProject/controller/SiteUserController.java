@@ -1,6 +1,7 @@
 package com.example.ourhome.webProject.controller;
 
 
+import com.example.ourhome.webProject.model.dto.UserLoginRequest;
 import com.example.ourhome.webProject.service.SiteUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +27,17 @@ public class SiteUserController {
     }
 
     //회원가입
-    @PostMapping("/login")
+    @PostMapping("/register")
     public ResponseEntity<String> join(@RequestBody SiteUserForm form) {
         siteUserService.join(form.getUserid(), form.getPassword(), form.getUsername(), form.getEmail());
         return ResponseEntity.ok().body("회원가입 성공");
     }
 
     //로그인
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserLoginRequest dto) {
+        String token = siteUserService.login(dto.getUserid(), dto.getPassword());
+        return ResponseEntity.ok().body(token);
+    }
+
 }
