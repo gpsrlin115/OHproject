@@ -16,10 +16,10 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>-->
             </div>
             <span>or use your email for registration</span>
-            <input type="text" id="username" placeholder="Name"/>
-            <input type="text" id="userid" placeholder="ID" />
-            <input type="email" id="email" placeholder="Email" />
-            <input type="password" id="password" placeholder="Password" />
+            <input type="text" id="username" name="username" placeholder="Name" th:value="${siteUserForm.username}"/>
+            <input type="text" id="userid" name="userid" placeholder="ID" th:value="${siteUserForm.userid}" />
+            <input type="email" id="email" name="email" placeholder="Email" th:value="${siteUserForm.email}" />
+            <input type="password" id="password" name="password" placeholder="Password" th:value="${siteUserForm.password}" />
             <button id="signUpButton">Sign Up</button>
         </form>
     </div>
@@ -60,7 +60,7 @@
 
 </body>
 </html>
-<script>
+<script th:inline="javascript">
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');
     const container = document.getElementById('container');
@@ -73,13 +73,11 @@
         container.classList.remove("right-panel-active");
     });
 
-    const signUpButton = document.getElementById('signUpButton');
+    function login(){
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
 
-    function login(signInButton){
-        var username = document.getElementById('username').value;
-        var password = document.getElementById('password').value;
-
-        var loginData = {
+        let loginData = {
             username: username,
             password: password
         };
