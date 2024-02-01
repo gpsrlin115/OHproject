@@ -24,7 +24,10 @@ public class SiteUserController {
     //회원가입
     @PostMapping("/register")
     public ResponseEntity<String> join(@RequestBody SiteUserForm form) {
-        siteUserService.join(form.getUserid(), form.getPassword(), form.getUsername(), form.getEmail());
+
+        siteUserService.join(form.getUserid(), form.getPassword(), form.getUsername(),
+                form.getEmail());
+        //여기가 회원가입하면 가져오는데인데 여기서 Role을 걍 다 ROLE_USER로 하면 되게 하면 되지않을까
         return ResponseEntity.ok().body("회원가입 성공");
     }
 

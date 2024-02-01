@@ -73,13 +73,18 @@
         container.classList.remove("right-panel-active");
     });
 
-    function login(){
+    function register(){
         let username = document.getElementById('username').value;
+        let userid = document.getElementById('userid').value;
         let password = document.getElementById('password').value;
+        let email = document.getElementById('email').value;
+
 
         let loginData = {
             username: username,
-            password: password
+            userid: userid,
+            password: password,
+            email: email
         };
 
         fetch('/api/users/login', {

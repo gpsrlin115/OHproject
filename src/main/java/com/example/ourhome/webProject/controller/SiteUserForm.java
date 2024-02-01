@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 @Getter
 @AllArgsConstructor
+@Setter
 public class SiteUserForm {
 
     @NotEmpty(message = "회원 이름은 필수 입니다")
@@ -19,5 +21,6 @@ public class SiteUserForm {
     @NotEmpty(message = "비밀번호는 필수 입력 항목 입니다.")
     private String password;
     private String email;
+    private String role;
 
 }

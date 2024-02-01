@@ -28,6 +28,7 @@ public class SiteUserService {
                 .password(encoder.encode(password))
                 .username(username)
                 .email(email)
+                .role("ROLE_USER")
                 .build();
         siteUserRepository.save(siteUser);
         return "SUCCESS";
