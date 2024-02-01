@@ -48,6 +48,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated());
         httpSecurity.addFilterBefore(new LoginFilter(configuration.getAuthenticationManager()),
                 UsernamePasswordAuthenticationFilter.class);
+
+
         httpSecurity.exceptionHandling(hanlder -> hanlder.accessDeniedHandler(new AccessDeniedHandler() {
             @Override
             public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
@@ -59,10 +61,10 @@ public class SecurityConfig {
                 .passwordParameter("password").failureHandler(new AuthenticationFailureHandler() {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                        log.info("핸들러 이유 ={}",exception.fillInStackTrace());
+                        log.info("핸들러 ={}",exception.fillInStackTrace());
                         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     }
-                }).loginProcessingUrl("/api/users/login"));//post 요청 URL
+                }).defaultSuccessUrl("/"));
 
         return httpSecurity.build();
     }

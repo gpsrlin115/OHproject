@@ -21,7 +21,7 @@ public class UserService implements UserDetailsService {
 
 
 
-       Optional<SiteUser> user =  repository.findByUsername(username);
+       Optional<SiteUser> user =  repository.findByUserid(username);
 
        if(user.isPresent()) {
            UserDetail detail = new UserDetail(user.get());

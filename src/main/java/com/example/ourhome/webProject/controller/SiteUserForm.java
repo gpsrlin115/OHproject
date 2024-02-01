@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Getter
 @AllArgsConstructor
 @Setter
+@NoArgsConstructor
 public class SiteUserForm {
 
     @NotEmpty(message = "회원 이름은 필수 입니다")
