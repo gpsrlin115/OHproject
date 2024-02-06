@@ -4,8 +4,6 @@ import com.example.ourhome.webProject.model.SiteUser;
 import java.util.ArrayList;
 import java.util.Collection;
 import lombok.Data;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,13 +14,13 @@ public class UserDetail implements UserDetails {
 
     public UserDetail(SiteUser user){
         this.user = user;
-    }//이거 @RequiredArgsConstructor로 바꿔도 되는거 아님? ㅇㅇ
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { // 로그인 유저정보 저장 (권한)
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(() -> {
-            return user.getRole();
+            return user.getRole(); // 인가를 이거로 확인
         });
         return authorities;
     }

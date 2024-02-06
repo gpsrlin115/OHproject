@@ -17,9 +17,7 @@ public class UserService implements UserDetailsService {
 
    private final SiteUserRepository repository;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { //provider에서 호출
 
        Optional<SiteUser> user =  repository.findByUserid(username);
 

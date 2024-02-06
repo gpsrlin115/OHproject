@@ -30,19 +30,19 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) //제일먼저 들어옴 (로그인시도, 유저인증 x)
             throws AuthenticationException {
 
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            SiteUserForm userform = mapper.readValue(request.getInputStream(),SiteUserForm.class);
+            ObjectMapper mapper = new ObjectMapper(); //form 데이터 -> json으로 변환
+            SiteUserForm userform = mapper.readValue(request.getInputStream(),SiteUserForm.class);  //json -> 객체로 변환
             UsernamePasswordAuthenticationToken token =
-                    new UsernamePasswordAuthenticationToken(userform.getUserid(),userform.getPassword()
-                    , List.of(new SimpleGrantedAuthority("ROLE_ANONYMOUS")));
-            return manager.authenticate(token);
+                    new UsernamePasswordAuthenticationToken(userform.getUserid(),userform.getPassword() //id,비번 "ROLE_ANONYMOUS" 권한
+                    , List.of(new SimpleGrantedAuthority("ROLE_ANONYMOUS")));//인증이 안된 유저를 토큰으로 만들어서
+            return manager.authenticate(token);//AuthenticationManager에게 전달
 
         }catch (Exception e) {
-
+            e.printStackTrace();
         }
         return null;
     }
@@ -61,6 +61,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             response.setCharacterEncoding("UTF-8");
         }
 
-        super.successfulAuthentication(request, response, chain, authResult);
+        //-> 여기
+//        super.successfulAuthentication(request, response, chain, authResult);
     }
 }

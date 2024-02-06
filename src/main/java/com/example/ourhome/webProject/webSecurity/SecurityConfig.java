@@ -1,6 +1,8 @@
 package com.example.ourhome.webProject.webSecurity;
 
+import com.example.ourhome.webProject.Filter.JwtCheckFilter;
 import com.example.ourhome.webProject.Filter.LoginFilter;
+import com.example.ourhome.webProject.repository.SiteUserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,6 +35,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 public class SecurityConfig {
 
+    private final SiteUserRepository repository;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationConfiguration configuration) throws Exception {
 
@@ -45,9 +49,12 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers("/api/users/**","api/v1/posts/**","/login").permitAll()
+                        //-> 이 경로 뺴고는 jwt 다 필요함 ㅇㅋ? 가릿
                         .anyRequest().authenticated());
         httpSecurity.addFilterBefore(new LoginFilter(configuration.getAuthenticationManager()),
                 UsernamePasswordAuthenticationFilter.class);
+
+        httpSecurity.addFilterBefore(new JwtCheckFilter(repository), UsernamePasswordAuthenticationFilter.class);
 
 
         httpSecurity.exceptionHandling(hanlder -> hanlder.accessDeniedHandler(new AccessDeniedHandler() {
