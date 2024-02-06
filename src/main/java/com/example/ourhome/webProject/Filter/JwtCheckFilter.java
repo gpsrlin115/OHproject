@@ -29,14 +29,17 @@ public class JwtCheckFilter extends OncePerRequestFilter {
 
        authorizationToken = request.getHeader("Authorization"); //이게 헤더에있는 jwt토큰꺼내는 거임
 
-
-        log.info("리퀘스트 경로 = {}",request.getRequestURI());
-
-        if(request.getRequestURI().startsWith("/")){ //이게 인덱스 페이지로 들어오면 다음 필터체인으로 넘기고 메서드 종료시킴
-                                                    //결국 200ok하겠다는 뜻
+        if(request.getRequestURI().startsWith("/login") || request.getRequestURI().startsWith("/api/users/")
+        || request.getRequestURI().startsWith("/api/admin/")
+        || request.getRequestURI().equals("/")){
+            //결국 200ok하겠다는 뜻
             filterChain.doFilter(request,response);
             return;
         }
+
+        log.info("리퀘스트 경로 = {}",request.getRequestURI());
+
+
         //토큰 없거나 Bearer로 시작안하면 401에러하고 끝낼꺼임
         if(authorizationToken == null || !authorizationToken.startsWith("Bearer ")){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

@@ -42,14 +42,14 @@ public class SecurityConfig {
 
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-        httpSecurity.formLogin(AbstractHttpConfigurer :: disable);
+
         httpSecurity.httpBasic(AbstractHttpConfigurer :: disable);
 
         httpSecurity.sessionManagement(seeion -> seeion.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers("/api/users/**","api/v1/posts/**","/login").permitAll()
-                        //-> 이 경로 뺴고는 jwt 다 필요함 ㅇㅋ? 가릿
+
                         .anyRequest().authenticated());
         httpSecurity.addFilterBefore(new LoginFilter(configuration.getAuthenticationManager()),
                 UsernamePasswordAuthenticationFilter.class);
@@ -64,7 +64,7 @@ public class SecurityConfig {
             }
         }));
 
-        httpSecurity.formLogin(login -> login.usernameParameter("userid")
+        httpSecurity.formLogin(login -> login.loginPage("/login").loginProcessingUrl("/login").usernameParameter("userid")
                 .passwordParameter("password").failureHandler(new AuthenticationFailureHandler() {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {

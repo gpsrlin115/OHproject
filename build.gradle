@@ -24,9 +24,15 @@ repositories {
 dependencies {
 
 
+	implementation 'mysql:mysql-connector-java:8.0.23'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5', 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	// Spring Boot Starter JDBC를 포함하여 Spring Boot Starter Data JPA 사용
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// MySQL JDBC 드라이버 추가
+	//runtimeOnly 'mysql:mysql-connector-java'
 
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -39,7 +45,7 @@ dependencies {
 	//implementation('io.jsonwebtoken:jjwt-api:0.11.2')
 	runtimeOnly 'com.h2database:h2'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	//runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation("org.junit.vintage:junit-vintage-engine") {

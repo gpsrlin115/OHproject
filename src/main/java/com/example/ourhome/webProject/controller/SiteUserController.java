@@ -31,12 +31,12 @@ public class SiteUserController {
         return ResponseEntity.ok().body("회원가입 성공");
     }
 
-    //로그인
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginRequest dto) {
-        String token = siteUserService.login(dto.getUserid(), dto.getPassword());
-        return ResponseEntity.ok().body(token);
-    }
+//    //로그인
+//    @PostMapping("/login")
+//    public ResponseEntity<String> login(@RequestBody UserLoginRequest dto) {
+//        String token = siteUserService.login(dto.getUserid(), dto.getPassword());
+//        return ResponseEntity.ok().body(token);
+//    }
 
     //test
     @PostMapping("/hellotest")
