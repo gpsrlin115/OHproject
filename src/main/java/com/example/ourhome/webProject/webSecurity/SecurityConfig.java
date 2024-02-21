@@ -39,13 +39,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationConfiguration configuration) throws Exception {
-
-
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
         httpSecurity.httpBasic(AbstractHttpConfigurer :: disable);
 
-        httpSecurity.sessionManagement(seeion -> seeion.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers("/api/users/**","api/v1/posts/**","/login").permitAll()
@@ -64,7 +62,7 @@ public class SecurityConfig {
             }
         }));
 
-        httpSecurity.formLogin(login -> login.loginPage("/login").loginProcessingUrl("/login").usernameParameter("userid")
+        httpSecurity.formLogin(login -> login.loginPage("/login").loginProcessingUrl("/login").usernameParameter("userid") //로그인 경로 설정
                 .passwordParameter("password").failureHandler(new AuthenticationFailureHandler() {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {

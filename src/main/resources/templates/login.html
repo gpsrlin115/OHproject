@@ -16,15 +16,15 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>-->
             </div>
             <span>or use your email for registration</span>
-            <input type="text" id="username" name="username" placeholder="Name" th:value="${siteUserForm.username}"/>
-            <input type="text" id="userid" name="userid" placeholder="ID" th:value="${siteUserForm.userid}" />
-            <input type="email" id="email" name="email" placeholder="Email" th:value="${siteUserForm.email}" />
-            <input type="password" id="password" name="password" placeholder="Password" th:value="${siteUserForm.password}" />
-            <button id="signUpButton">Sign Up</button>
+            <input type="text" id="username" name="username" placeholder="Name" />
+            <input type="text" id="userid" name="userid" placeholder="ID"  />
+            <input type="email" id="email" name="email" placeholder="Email"  />
+            <input type="password" id="password" name="password" placeholder="Password" />
+            <button id="signUpButton" onclick="register()">Sign Up</button>
         </form>
     </div>
     <div class="form-container sign-in-container">
-        <form action="#">
+        <form action="#" th:action="@{/api/users/login}" th:object="${siteUserForm}" method="post">
             <h1>Sign in</h1>
             <div class="social-container">
                 <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -32,10 +32,10 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
             <span>or use your account!</span>
-            <input type="text" placeholder="id" />
-            <input type="password" placeholder="Password" />
+            <input type="text" class="userid" placeholder="ID"/>
+            <input type="password" class="password" placeholder="Password" />
             <a href="#">Forgot your password?</a>
-            <button>Sign In</button>
+            <button id="signInButton" onclick="login()">Sign In</button>
         </form>
     </div>
     <div class="overlay-container">
@@ -60,6 +60,7 @@
 
 </body>
 </html>
+<script src="js/tokenCheck.js"></script>
 <script th:inline="javascript">
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');
@@ -87,7 +88,7 @@
             email: email
         };
 
-        fetch('/api/users/login', {
+        fetch('/api/users/register', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
@@ -103,5 +104,32 @@
                 //오류 처리
                 console.error('Error', error);
             })
+    }
+
+    function login(){
+        let userid = document.querySelector('.userid').value;
+        let password = document.querySelector('.password').value;
+
+        let loginData = {
+            userid: userid,
+            password: password,
+        };
+
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                //서버로부터 온 응답 처리
+                console.log(data);
+            })
+            .catch(error => {
+                //오류 처리
+                console.error('Error', error);
+            });
     }
 </script>

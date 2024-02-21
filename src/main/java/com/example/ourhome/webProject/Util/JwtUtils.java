@@ -16,10 +16,8 @@ public class JwtUtils {
     public static String createJwtToken(UserDetail detail){
         Claims claims = Jwts.claims();
 
-        claims.put("userid",detail.getUser().getUserid());//일케하면 되나 ㅇㅇ
+        claims.put("userid",detail.getUser().getUserid());
         claims.put("username",detail.getUsername());
-
-
 
         return Jwts.builder().setClaims(claims).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + (60000 * 30 * 24)))
