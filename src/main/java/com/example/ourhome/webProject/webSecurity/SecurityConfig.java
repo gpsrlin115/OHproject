@@ -46,30 +46,21 @@ public class SecurityConfig {
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         httpSecurity.authorizeHttpRequests(request ->
-                request.requestMatchers("/api/users/**","api/v1/posts/**","/login").permitAll()
-
+                request.requestMatchers("/api/users/**","api/v1/posts/**").permitAll()
                         .anyRequest().authenticated());
-        httpSecurity.addFilterBefore(new LoginFilter(configuration.getAuthenticationManager()),
-                UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity.addFilterBefore(new JwtCheckFilter(repository), UsernamePasswordAuthenticationFilter.class);
 
-
-        httpSecurity.exceptionHandling(hanlder -> hanlder.accessDeniedHandler(new AccessDeniedHandler() {
-            @Override
-            public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-                log.info("핸들러 테스트 ");
-            }
-        }));
-
-        httpSecurity.formLogin(login -> login.loginPage("/login").loginProcessingUrl("/login").usernameParameter("userid") //로그인 경로 설정
-                .passwordParameter("password").failureHandler(new AuthenticationFailureHandler() {
-                    @Override
-                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                        log.info("핸들러 ={}",exception.fillInStackTrace());
-                        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    }
-                }).defaultSuccessUrl("/"));
+        httpSecurity.formLogin(login -> login.loginPage("/login")
+                .permitAll()
+                .successHandler(((request, response, authentication) -> {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.addHeader("TEST", authentication.getName());
+                }))
+                .failureHandler((request, response, exception) -> {
+                    log.info("핸들러 ={}",exception.fillInStackTrace());
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                }));
 
         return httpSecurity.build();
     }

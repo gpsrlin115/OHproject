@@ -24,7 +24,7 @@
         </form>
     </div>
     <div class="form-container sign-in-container">
-        <form action="#" th:action="@{/api/users/login}" th:object="${siteUserForm}" method="post">
+        <form action="#" th:action="@{/login}" th:object="${siteUserForm}" method="post">
             <h1>Sign in</h1>
             <div class="social-container">
                 <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -32,8 +32,8 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
             <span>or use your account!</span>
-            <input type="text" class="userid" placeholder="ID"/>
-            <input type="password" class="password" placeholder="Password" />
+            <input type="text" name="username" class="userid" placeholder="ID"/>
+            <input type="password" name="password" class="password" placeholder="Password" />
             <a href="#">Forgot your password?</a>
             <button id="signInButton" onclick="login()">Sign In</button>
         </form>
@@ -107,7 +107,7 @@
     }
 
     function login(){
-        let userid = document.querySelector('.userid').value;
+        /*let userid = document.querySelector('.userid').value;
         let password = document.querySelector('.password').value;
 
         let loginData = {
@@ -130,6 +130,6 @@
             .catch(error => {
                 //오류 처리
                 console.error('Error', error);
-            });
+            });*/
     }
 </script>
