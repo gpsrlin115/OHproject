@@ -6,6 +6,7 @@ import com.example.ourhome.webProject.repository.SiteUserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -43,19 +44,18 @@ public class SecurityConfig {
 
         httpSecurity.httpBasic(AbstractHttpConfigurer :: disable);
 
-        httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers("/api/users/**","api/v1/posts/**").permitAll()
                         .anyRequest().authenticated());
 
-        httpSecurity.addFilterBefore(new JwtCheckFilter(repository), UsernamePasswordAuthenticationFilter.class);
-
         httpSecurity.formLogin(login -> login.loginPage("/login")
                 .permitAll()
                 .successHandler(((request, response, authentication) -> {
-                    response.setStatus(HttpServletResponse.SC_OK);
-                    response.addHeader("TEST", authentication.getName());
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("authentication", authentication);
+                    response.sendRedirect("http://localhost:8080/");
                 }))
                 .failureHandler((request, response, exception) -> {
                     log.info("핸들러 ={}",exception.fillInStackTrace());
